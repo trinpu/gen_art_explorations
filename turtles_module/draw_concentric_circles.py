@@ -1,6 +1,15 @@
 import turtle as t
 from random import randint
 
+def set_pen_size(pen_size, pen_size_step, max_pen_size):
+    """Returns adjusted pen_size, with a maximum max_pen_size """
+    if pen_size > max_pen_size:
+        pen_size = max_pen_size
+    else:
+        pen_size += pen_size_step
+    return pen_size
+
+
 def draw_centered_circle(a_turtle, radius):
     """ Void function that draws a centred circle """
     a_turtle.penup()
@@ -15,17 +24,14 @@ def draw_concentric_circles(a_turtle, starting_radius, radius_growth, n_circles)
 
     # pensize settings
     pen_size = 1
-    max_pensize = 8
+    pen_size_step = 1
+    max_pen_size = 8
 
     for circle in range(n_circles):
         a_turtle.pensize(pen_size)
         draw_centered_circle(a_turtle, radius)
         radius += radius_growth
-
-        if pen_size > max_pensize:
-            pen_size = max_pensize
-        else:
-            pen_size += 2
+        pen_size = set_pen_size(pen_size, pen_size_step, max_pen_size)
 
 def draw_offcenter_circle(a_turtle, radius, movement):
     """ Void function that draws an offcentered circle """
@@ -43,14 +49,16 @@ def draw_twisted_tube(a_turtle, starting_radius, radius_growth, n_circles):
     
     # pensize settings
     pen_size = 1
-    max_pensize = 20
+    pen_size_step = 2
+    max_pen_size = 20
 
-    turtle_colors = ['deep sky blue', 'blue', 'cornflower blue']
+    turtle_color_options = ['deep sky blue', 'blue', 'cornflower blue', 'green']
 
     # drawing
     for circle in range(n_circles):
 
-        a_turtle.color(turtle_colors[randint(0, len(turtle_colors) - 1)])
+        a_turtle.color(turtle_color_options[randint(0, len(turtle_color_options) - 1)])
+        
         movement_growth_ratio = randint(0,70) / 100
         movement = radius + radius_growth * movement_growth_ratio
 
@@ -59,10 +67,7 @@ def draw_twisted_tube(a_turtle, starting_radius, radius_growth, n_circles):
 
         radius += radius_growth
 
-        if pen_size > max_pensize:
-            pen_size = max_pensize
-        else:
-            pen_size += 2
+        pen_size = set_pen_size(pen_size, pen_size_step, max_pen_size)
 
 
 ### fill property to increase it
